@@ -26,4 +26,16 @@ public class Controller {
         }
         return service.serviceLog();
     }
+
+    @RequestMapping("/same")
+    public String handleSame(HttpServletRequest request) throws Exception {
+        log.info("Same span controller" + request.getHeader("trace-id"));
+        return service.serviceSame(1L);
+    }
+
+    @RequestMapping("/new")
+    public String handleNew() throws Exception {
+        log.info("New span controller");
+        return service.serviceNew();
+    }
 }
