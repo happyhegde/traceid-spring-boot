@@ -1,5 +1,6 @@
 package com.shr.poc.traceid.controller;
 
+import com.shr.poc.traceid.Response;
 import com.shr.poc.traceid.services.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class Controller {
     }
 
     @RequestMapping("/new")
-    public String handleNew() throws Exception {
+    public Response handleNew() throws Exception {
         log.info("New span controller");
-        return service.serviceNew();
+        return new Response(service.serviceNew());
     }
 }
