@@ -1,6 +1,7 @@
 package com.shr.poc.traceid.autoconfig;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.MDC;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -21,7 +22,7 @@ public class TraceIdPostProcessor implements EnvironmentPostProcessor {
         Map<String, Object> map = new HashMap<>();
         log.info("In postProcess");
         if (Boolean.parseBoolean(environment.getProperty("tracing.enabled", "true"))) {
-            map.put("logging.pattern.level", "%5p ${spring.application.name}");
+            map.put("logging.pattern.level", "%5p [X-TRACE-ID: %X{logLevelPattern}]");
         }
         map.put("spring.aop.proxyTargetClass", "true");
         appendOrWrite(environment.getPropertySources(), map);
@@ -40,12 +41,9 @@ public class TraceIdPostProcessor implements EnvironmentPostProcessor {
                 }
             }
         }
-
-
         if (target == null) {
             target = new MapPropertySource(PROPERTY_SOURCE_NAME, map);
         }
-
         if (!propertySources.contains(PROPERTY_SOURCE_NAME)) {
             propertySources.addLast(target);
         }

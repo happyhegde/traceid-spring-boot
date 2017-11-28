@@ -1,6 +1,7 @@
 package com.shr.poc.traceid.autoconfig;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,8 +21,12 @@ public class RequestResponseFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        log.info("Filter activated");
-        response.addHeader("X-Trace-Id", UUID.randomUUID().toString());
-        filterChain.doFilter(request, response);
+        try {
+            response.addHeader("X-TRACE-ID", UUID.randomUUID().toString());
+            MDC.put("logLevelPattern", response.getHeader("X-TRACE-ID"));
+            filterChain.doFilter(request, response);
+        } finally {
+            MDC.clear();
+        }
     }
 }
