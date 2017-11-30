@@ -24,9 +24,11 @@ public class RequestResponseFilter extends OncePerRequestFilter {
         try {
             response.addHeader("X-TRACE-ID", UUID.randomUUID().toString());
             MDC.put("logLevelPattern", response.getHeader("X-TRACE-ID"));
+            log.info("API call: " + request.getMethod() + " : " + request.getRequestURI());
             filterChain.doFilter(request, response);
         } finally {
             MDC.clear();
         }
     }
+
 }
