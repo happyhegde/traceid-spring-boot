@@ -1,4 +1,4 @@
-package com.shr.poc.traceid;
+package com.shr.poc.traceid.pojo;
 
 import java.io.Serializable;
 
