@@ -1,4 +1,4 @@
-package com.shr.poc.traceid.autoconfig;
+package com.shr.poc.traceid.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;

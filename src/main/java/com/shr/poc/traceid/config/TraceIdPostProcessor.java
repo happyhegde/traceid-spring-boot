@@ -1,4 +1,4 @@
-package com.shr.poc.traceid.autoconfig;
+package com.shr.poc.traceid.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
